@@ -255,11 +255,17 @@ export const PROBLEMS_WDROZENIA = [
 
 export const TESTIMONIALS = [
   {
-    content: "Serdecznie polecam współpracę z GoFlow. Praca z zespołem przebiega w bardzo dobrej, partnerskiej atmosferze, przy jednoczesnym zachowaniu wysokiego poziomu profesjonalizmu. Dużą wartością jest ich podejście nastawione na realne potrzeby organizacji, skupienie na porządkowaniu i upraszczaniu procesów, a nie narzucaniu jednego „gotowego” rozwiązania. Dzięki wdrożonym automatyzacjom i rozwiązaniom opartym o AI udało nam się usprawnić wiele kluczowych obszarów operacyjnych, finansowych i biznesowych w Cookie3.",
+    content: "Serdecznie polecam współpracę z GoFlow. Praca z zespołem przebiega w bardzo dobrej, partnerskiej atmosferze, przy jednoczesnym zachowaniu wysokiego poziomu profesjonalizmu. Dużą wartością jest ich podejście nastawione na realne potrzeby organizacji, skupienie na porządkowaniu i upraszczaniu procesów, a nie narzucaniu jednego „gotowego" rozwiązania. Dzięki wdrożonym automatyzacjom i rozwiązaniom opartym o AI udało nam się usprawnić wiele kluczowych obszarów operacyjnych, finansowych i biznesowych w Cookie3.",
     author: "Wojtek Mrówka",
     role: "Chief Operating Officer",
     company: "Cookie3",
     image: `${import.meta.env.BASE_URL}image/goryla-wojtek-mrowka.jpeg`,
+  },
+  {
+    content: "Dodatkowo przy okazji chciałbym podziękować za to, że miałem okazję z wami współpracować, macie ogromną wiedzę, za co niesamowicie was podziwiam... To jak wszystko potraficie ogarnąć, zautomatyzować to jest szok! Naprawdę doceniam, że mieliście cierpliwość i tłumaczyliście wszystko tak, żebyśmy jak najwięcej rozumieli sami i mogli rozwijać te systemy też samodzielnie, przez co zaraziliście mnie trochę automatyzacjami :D Mam nadzieję, że gdzieś w przyszłości jeszcze będziemy mieli okazję współpracować!",
+    author: "Krystian Czarnecki",
+    role: "FP&A Analyst",
+    image: `${import.meta.env.BASE_URL}image/krystian-czarnecki-photo.jpeg`,
   },
 ];
 
