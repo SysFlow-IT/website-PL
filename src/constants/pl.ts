@@ -262,7 +262,7 @@ export const TESTIMONIALS = [
     image: `${import.meta.env.BASE_URL}image/goryla-wojtek-mrowka.jpeg`,
   },
   {
-    content: "Dodatkowo przy okazji chciałbym podziękować za to, że miałem okazję z wami współpracować, macie ogromną wiedzę, za co niesamowicie was podziwiam... To jak wszystko potraficie ogarnąć, zautomatyzować to jest szok! Naprawdę doceniam, że mieliście cierpliwość i tłumaczyliście wszystko tak, żebyśmy jak najwięcej rozumieli sami i mogli rozwijać te systemy też samodzielnie, przez co zaraziliście mnie trochę automatyzacjami :D Mam nadzieję, że gdzieś w przyszłości jeszcze będziemy mieli okazję współpracować!",
+    content: "Chciałbym podziękować za możliwość współpracy z wami. Macie ogromną wiedzę, za co niesamowicie was podziwiam. To jak wszystko potraficie ogarnąć i zautomatyzować to jest szok! Naprawdę doceniam, że mieliście cierpliwość i tłumaczyliście wszystko tak, żebyśmy jak najwięcej rozumieli sami i mogli rozwijać te systemy samodzielnie, przez co zaraziliście mnie trochę automatyzacjami. Mam nadzieję, że w przyszłości będziemy mieli okazję ponownie współpracować!",
     author: "Krystian Czarnecki",
     role: "FP&A Analyst",
     image: `${import.meta.env.BASE_URL}image/krystian-czarnecki-photo.jpeg`,
