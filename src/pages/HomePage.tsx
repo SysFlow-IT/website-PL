@@ -31,34 +31,44 @@ export const HomePage: React.FC = () => {
     }
   }, [location.state]);
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitStatus("loading");
 
-    try {
-      const response = await fetch('https://api.buttondown.email/v1/subscribers', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Token 14530271-95a4-4cdb-8fd4-9b7acab9b24e',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          tags: ['website']
-        })
-      });
+    // Submit via hidden iframe to avoid CORS issues
+    const iframe = document.createElement('iframe');
+    iframe.name = 'buttondown-iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
 
-      if (response.ok) {
-        setSubmitStatus("success");
-        setEmail("");
-        setTimeout(() => setSubmitStatus("idle"), 3000);
-      } else {
-        throw new Error('Subscription failed');
-      }
-    } catch {
-      setSubmitStatus("error");
-      setTimeout(() => setSubmitStatus("idle"), 3000);
-    }
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://buttondown.email/api/emails/embed-subscribe/potegaai';
+    form.target = 'buttondown-iframe';
+
+    const emailInput = document.createElement('input');
+    emailInput.type = 'hidden';
+    emailInput.name = 'email';
+    emailInput.value = email;
+    form.appendChild(emailInput);
+
+    const tagInput = document.createElement('input');
+    tagInput.type = 'hidden';
+    tagInput.name = 'tag';
+    tagInput.value = 'website';
+    form.appendChild(tagInput);
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Clean up and show success after short delay
+    setTimeout(() => {
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+      setSubmitStatus("success");
+      setEmail("");
+      setTimeout(() => setSubmitStatus("idle"), 5000);
+    }, 1500);
   };
 
   return (
