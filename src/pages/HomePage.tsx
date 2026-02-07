@@ -43,7 +43,7 @@ export const HomePage: React.FC = () => {
 
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = 'https://buttondown.email/api/emails/embed-subscribe/potegaai';
+    form.action = 'https://buttondown.email/api/emails/embed-subscribe/sysflow';
     form.target = 'buttondown-iframe';
 
     const emailInput = document.createElement('input');
