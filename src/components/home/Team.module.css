@@ -167,3 +167,45 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Light mode overrides */
+:global([data-theme='light']) .sectionTitle {
+  color: #0f172a;
+}
+
+:global([data-theme='light']) .sectionDescription {
+  color: #475569;
+}
+
+:global([data-theme='light']) .teamMember {
+  border-color: #e2e8f0;
+}
+
+:global([data-theme='light']) .teamMember.visible:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+:global([data-theme='light']) .memberAvatar {
+  background: #f1f5f9;
+}
+
+:global([data-theme='light']) .memberAvatar span {
+  color: #64748b;
+}
+
+:global([data-theme='light']) .teamMemberContent {
+  background: #f8fafc;
+}
+
+:global([data-theme='light']) .teamMember h3 {
+  color: #0f172a;
+}
+
+:global([data-theme='light']) .memberRole {
+  color: #64748b;
+}
+
+:global([data-theme='light']) .teamMember.visible:hover .memberRole {
+  color: #334155;
+}

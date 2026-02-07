@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Navbar, Footer } from "@components/layout";
 import { FlowOne } from "@components/home/FlowOne";
 import { WhyChoose } from "@components/home/WhyChoose";
@@ -9,60 +9,15 @@ import styles from "./WdrozeniaPage.module.css";
 
 export const WdrozeniaPage: React.FC = () => {
   const { content } = useContent();
-  const [scrollProgress, setScrollProgress] = useState(0);
   const scrollToSection = useScrollToSection();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const maxDistance = Math.max(window.innerHeight * 0.9, 400);
-      const progress = Math.min(window.scrollY / maxDistance, 1);
-      setScrollProgress(progress);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <div className="app loaded">
       <Navbar />
       <section className={styles.hero}>
-        <video
-          className={styles.heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            transform: `translateY(${scrollProgress * 140}px) scale(${1 + scrollProgress * 0.18})`,
-          }}
-        >
-          <source src={`${import.meta.env.BASE_URL}video/hero.mp4`} type="video/mp4" />
-        </video>
-        <div
-          className={styles.heroOverlay}
-          style={{ opacity: 0.6 + scrollProgress * 0.35 }}
-        ></div>
-        <div
-          className={styles.heroGradientTop}
-          style={{
-            opacity: 0.35 + scrollProgress * 0.5,
-            transform: `scaleY(${1.2 + scrollProgress * 0.6})`,
-          }}
-        ></div>
-        <div
-          className={styles.heroGradientBottom}
-          style={{
-            opacity: 0.3 + scrollProgress * 0.55,
-            transform: `scaleY(${1.3 + scrollProgress * 0.8})`,
-          }}
-        ></div>
-        <div
-          className={styles.heroInner}
-          style={{
-            transform: `translateY(${scrollProgress * 25}px)`,
-          }}
-        >
+        <div className={styles.heroBackground}></div>
+        <div className={styles.heroOverlay}></div>
+        <div className={styles.heroInner}>
           <p className={styles.serviceLabel}>{content.IMPLEMENTATIONS_PAGE.HERO.LABEL}</p>
           <h1 className={styles.title}>
             {content.IMPLEMENTATIONS_PAGE.HERO.TITLE}

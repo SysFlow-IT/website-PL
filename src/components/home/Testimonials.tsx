@@ -15,6 +15,7 @@ export const Testimonials: React.FC = () => {
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const testimonials = content.TESTIMONIALS;
+    const showCarousel = testimonials.length > 3;
     const testimonial = testimonials[currentIndex];
 
     const animateTransition = useCallback((newIndex: number) => {
@@ -68,17 +69,17 @@ export const Testimonials: React.FC = () => {
     }, [goToNext]);
 
     useEffect(() => {
-        if (isVisible && cardRef.current) {
+        if (isVisible && cardRef.current && showCarousel) {
             gsap.fromTo(
                 cardRef.current,
                 { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
             );
         }
-    }, [isVisible]);
+    }, [isVisible, showCarousel]);
 
     useEffect(() => {
-        if (testimonials.length > 1) {
+        if (showCarousel && testimonials.length > 1) {
             intervalRef.current = setInterval(goToNext, AUTO_ROTATE_INTERVAL);
         }
         return () => {
@@ -86,7 +87,7 @@ export const Testimonials: React.FC = () => {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [goToNext, testimonials.length]);
+    }, [goToNext, testimonials.length, showCarousel]);
 
     const handleNavClick = (index: number) => {
         goToIndex(index);
@@ -103,6 +104,45 @@ export const Testimonials: React.FC = () => {
         resetAutoRotate();
     };
 
+    // Grid layout for 3 or fewer testimonials
+    if (!showCarousel) {
+        return (
+            <section className={`${styles.section} section`} ref={ref}>
+                <div className="container">
+                    <h2 className="section-title">
+                        {content.HOME_PAGE.TESTIMONIALS.TITLE}
+                    </h2>
+
+                    <div className={styles.gridWrapper}>
+                        {testimonials.map((testimonial, index) => (
+                            <div
+                                key={index}
+                                className={`${styles.card} ${isVisible ? styles.cardVisible : ''}`}
+                                style={{ animationDelay: `${index * 0.15}s` }}
+                            >
+                                {testimonial.image && (
+                                    <div className={styles.imageWrapper}>
+                                        <img src={testimonial.image} alt={testimonial.author} className={styles.image} />
+                                    </div>
+                                )}
+                                <p className={styles.quote}>
+                                    "{testimonial.content}"
+                                </p>
+                                <div className={styles.author}>
+                                    <span className={styles.name}>{testimonial.author}</span>
+                                    <span className={styles.role}>
+                                        {testimonial.role}{testimonial.company ? `, ${testimonial.company}` : ''}
+                                    </span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // Carousel layout for more than 3 testimonials
     return (
         <section className={`${styles.section} section`} ref={ref}>
             <div className="container">

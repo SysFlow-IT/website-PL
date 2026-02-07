@@ -271,11 +271,100 @@ export const TESTIMONIALS = [
 
 export const HOME_PAGE = {
   HERO: {
-    LABEL: "SysFlow /",
-    TITLE: "Automatyzacja, AI, bezpieczeństwo i systemy zarządzania danymi",
-    SUBTITLE: "SysFlow.One to software house, który przekształca sposób pracy firm poprzez automatyzację, AI, bezpieczeństwo i systemy zarządzania danymi.",
-    BUTTON_PRIMARY: "Umów spotkanie",
-    BUTTON_SECONDARY: "Zobacz projekty",
+    LABEL: "potega.ai",
+    TITLE: "Twój zespół traci godziny na powtarzalne zadania.",
+    TITLE_HIGHLIGHT: "Automatyzujemy to w tygodnie, nie miesiące.",
+    SUBTITLE: "Pomagamy firmom 10-3000 osób automatyzować dokumentację, obsługę klienta i procesy back-office. Skalowalne podejście — od szybkiego MVP w kilka tygodni po kompleksowe wdrożenia enterprise.",
+    BUTTON_PRIMARY: "Bezpłatna konsultacja 30 min",
+    BUTTON_SECONDARY: "Newsletter AI dla biznesu →",
+    PROOF: "✓ Bez zobowiązań · ✓ Wyjdziesz z konkretnym planem · ✓ 100% za darmo",
+  },
+  FEATURED_CASE: {
+    EMOJI: "🚀",
+    TEXT: "Case study Cookie3:",
+    DESCRIPTION: "Zautomatyzowaliśmy finanse i procesy BD — z 5 systemów do 2, setki godzin oszczędności rocznie.",
+    LINK: "Zobacz szczegóły →",
+  },
+  FOR_WHO: {
+    TITLE: "Dla kogo jest automatyzacja AI?",
+    CARDS: [
+      {
+        icon: "👨‍💼",
+        title: "Dla zarządu szukającego oszczędności",
+        description: "Twój zespół rośnie, ale budżet nie? Automatyzacja pozwala skalować operacje bez proporcjonalnego wzrostu kosztów. Zamiast zatrudniać — automatyzuj.",
+      },
+      {
+        icon: "👨‍💻",
+        title: "Dla liderów technicznych",
+        description: "Masz pomysły na automatyzację, ale brakuje rąk do wdrożenia? Dołączamy do Twojego zespołu, transferujemy wiedzę i zostawiamy rozwiązanie, które utrzymacie sami.",
+      },
+      {
+        icon: "🏢",
+        title: "Dla firm 10-3000 osób",
+        description: "Za duzi na ręczne procesy, za mali na własny team AI? Jesteśmy zwinnym partnerem — bez korporacyjnych narzutów, z szybkością startupu i doświadczeniem enterprise.",
+      },
+    ],
+  },
+  WHY_US: {
+    TITLE: "Dlaczego potega.ai?",
+    CARDS: [
+      {
+        icon: "⚡",
+        title: "Szybkość startupu, doświadczenie enterprise",
+        description: "Mały, zwinny team = brak korporacyjnej biurokracji. Od pierwszego spotkania do działającego MVP w 6 tygodni, nie 6 miesięcy.",
+      },
+      {
+        icon: "💰",
+        title: "Konkurencyjne ceny",
+        description: "Nie mamy 200-osobowego overhead'u do opłacenia. Płacisz za wartość, nie za biurowce i middle management.",
+      },
+      {
+        icon: "🔧",
+        title: "Tech-agnostic",
+        description: "GPT-4, Claude, Llama, własne modele — dobieramy technologię do problemu, nie odwrotnie. Bez vendor lock-in.",
+      },
+      {
+        icon: "🤝",
+        title: "Partner, nie vendor",
+        description: "Transferujemy wiedzę, dokumentujemy wszystko, szkolimy Twój zespół. Po wdrożeniu jesteś niezależny.",
+      },
+    ],
+  },
+  CASE_STUDY: {
+    BADGE: "Case Study",
+    TITLE: "Cookie3 — automatyzacja finansów i BD w Web3",
+    INTRO: "Cookie3 to platforma Web3 analytics pomagająca projektom blockchain zrozumieć swoich użytkowników. Szybki wzrost oznaczał chaos w procesach — rosnąca dokumentacja, rozproszone systemy, ręczne zadania zjadające czas zespołu.",
+    WHAT_WE_DID: {
+      TITLE: "Co zrobiliśmy:",
+      ITEMS: [
+        "🔄 Zautomatyzowaliśmy procesy finansowe — od faktur po raportowanie",
+        "📊 Usprawniliśmy workflow Business Development",
+        "📁 Uporządkowaliśmy dokumentację i przepływ informacji",
+        "🔗 Zintegrowaliśmy systemy: z 5 narzędzi do 2",
+      ],
+    },
+    RESULTS: {
+      TITLE: "Rezultaty:",
+      ITEMS: [
+        { number: "5 → 2", label: "systemów" },
+        { number: "100+", label: "godzin oszczędności / miesiąc" },
+        { number: "1", label: "źródło prawdy dla danych" },
+      ],
+    },
+    CTA: "Chcesz podobnych wyników? Porozmawiajmy",
+  },
+  NEWSLETTER: {
+    TITLE: "🤖 AI dla biznesu — co tydzień",
+    INTRO: "Praktyczny newsletter bez buzzwordów. Co tydzień:",
+    BENEFITS: [
+      "✓ Narzędzia AI, które warto znać (testujemy, żebyś nie musiał)",
+      "✓ Case studies z polskiego rynku",
+      "✓ Konkretne tipy do wdrożenia od poniedziałku",
+    ],
+    COMMUNITY: "Dołącz do społeczności liderów AI w Polsce.",
+    PLACEHOLDER: "Twój email firmowy",
+    BUTTON: "Zapisz się za darmo",
+    DISCLAIMER: "Zero spamu. Wypisz się jednym kliknięciem.",
   },
   SOLUTIONS: {
     TITLE: "Nasze Rozwiązania",
@@ -298,6 +387,15 @@ export const HOME_PAGE = {
   },
   TESTIMONIALS: {
     TITLE: "Co mówią nasi klienci",
+  },
+  CONTACT: {
+    TITLE: "Umów bezpłatną konsultację",
+    SUBTITLE: "30 minut, zero zobowiązań. Wyjdziesz z:",
+    BENEFITS: [
+      "✓ Oceną potencjału automatyzacji w Twojej firmie",
+      "✓ 2-3 konkretnymi pomysłami do wdrożenia",
+      "✓ Szacunkowym timeline'm realizacji",
+    ],
   },
   CTA: {
     TITLE: "Skontaktuj się z nami",

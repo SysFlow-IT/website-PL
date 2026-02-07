@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContent } from "../../hooks/useContent";
+import { ThemeToggle } from "../shared/ThemeToggle";
 import styles from "./layout.module.css";
 
 interface NavbarProps {
@@ -115,6 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
             </div>
 
             <div className={styles.actions}>
+              <ThemeToggle />
               <button
                 className={styles.ctaButton}
                 onClick={() => scrollToSection("kontakt")}
@@ -154,9 +156,19 @@ export const Footer: React.FC = () => {
               </a>
             </div>
           </div>
-          <p className={styles.footerText}>
-            © {new Date().getFullYear()} SysFlow. Wszelkie prawa zastrzeżone.
-          </p>
+          <div className={styles.footerRight}>
+            <div className={styles.footerLegal}>
+              <Link to="/polityka-prywatnosci" className={styles.footerLegalLink}>
+                Polityka prywatności
+              </Link>
+              <Link to="/regulamin" className={styles.footerLegalLink}>
+                Regulamin
+              </Link>
+            </div>
+            <p className={styles.footerText}>
+              © {new Date().getFullYear()} SysFlow. Wszelkie prawa zastrzeżone.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

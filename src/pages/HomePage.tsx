@@ -1,29 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Navbar, Footer } from "@components/layout";
-import { Problems } from "@components/home/Problems";
 import { Testimonials } from "@components/home/Testimonials";
-import { Team } from "@components/home/Team";
+import { TrustedBy } from "@components/home/TrustedBy";
 import { useContent } from "../hooks/useContent";
 import { useRevealOnIntersect } from "@hooks/useRevealOnIntersect";
 import styles from "./HomePage.module.css";
 
 export const HomePage: React.FC = () => {
   const { content } = useContent();
-  const [scrollProgress, setScrollProgress] = useState(0);
   const { ref: solutionsRef, isVisible } = useRevealOnIntersect();
+  const { ref: forWhoRef, isVisible: forWhoVisible } = useRevealOnIntersect();
+  const { ref: whyUsRef, isVisible: whyUsVisible } = useRevealOnIntersect();
+  const { ref: caseStudyRef, isVisible: caseStudyVisible } = useRevealOnIntersect();
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const maxDistance = Math.max(window.innerHeight * 0.9, 400);
-      const progress = Math.min(window.scrollY / maxDistance, 1);
-      setScrollProgress(progress);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [email, setEmail] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   // Handle scroll to section from navigation
   useEffect(() => {
@@ -35,56 +27,54 @@ export const HomePage: React.FC = () => {
           element.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
-      // Clear the state
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
 
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitStatus("loading");
 
+    try {
+      const response = await fetch('https://api.buttondown.email/v1/subscribers', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Token 14530271-95a4-4cdb-8fd4-9b7acab9b24e',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          tags: ['website']
+        })
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setEmail("");
+        setTimeout(() => setSubmitStatus("idle"), 3000);
+      } else {
+        throw new Error('Subscription failed');
+      }
+    } catch {
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 3000);
+    }
+  };
 
   return (
     <div className="app loaded">
       <Navbar />
+
+      {/* HERO SECTION */}
       <section className={styles.hero}>
-        <video
-          className={styles.heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            transform: `translateY(${scrollProgress * 140}px) scale(${1 + scrollProgress * 0.18})`,
-          }}
-        >
-          <source src={`${import.meta.env.BASE_URL}video/hero.mp4`} type="video/mp4" />
-        </video>
-        <div
-          className={styles.heroOverlay}
-          style={{ opacity: 0.6 + scrollProgress * 0.35 }}
-        ></div>
-        <div
-          className={styles.heroGradientTop}
-          style={{
-            opacity: 0.35 + scrollProgress * 0.5,
-            transform: `scaleY(${1.2 + scrollProgress * 0.6})`,
-          }}
-        ></div>
-        <div
-          className={styles.heroGradientBottom}
-          style={{
-            opacity: 0.3 + scrollProgress * 0.55,
-            transform: `scaleY(${1.3 + scrollProgress * 0.8})`,
-          }}
-        ></div>
-        <div
-          className={styles.heroInner}
-          style={{
-            transform: `translateY(${scrollProgress * 25}px)`,
-          }}
-        >
+        <div className={styles.heroBackground}></div>
+        <div className={styles.heroOverlay}></div>
+        <div className={styles.heroInner}>
           <p className={styles.serviceLabel}>{content.HOME_PAGE.HERO.LABEL}</p>
           <h1 className={styles.title}>
             {content.HOME_PAGE.HERO.TITLE}
+            <br />
+            <span className={styles.gradientText}>{content.HOME_PAGE.HERO.TITLE_HIGHLIGHT}</span>
           </h1>
           <p className={styles.subtitle}>
             {content.HOME_PAGE.HERO.SUBTITLE}
@@ -98,12 +88,114 @@ export const HomePage: React.FC = () => {
             >
               {content.HOME_PAGE.HERO.BUTTON_PRIMARY}
             </a>
+            <a href="#newsletter" className={styles.secondaryAction}>
+              {content.HOME_PAGE.HERO.BUTTON_SECONDARY}
+            </a>
+          </div>
+          <p className={styles.heroProof}>{content.HOME_PAGE.HERO.PROOF}</p>
+
+          {/* Featured Case Study */}
+          <div className={styles.featuredCase}>
+            <p>
+              {content.HOME_PAGE.FEATURED_CASE.EMOJI}{" "}
+              <strong>{content.HOME_PAGE.FEATURED_CASE.TEXT}</strong>{" "}
+              {content.HOME_PAGE.FEATURED_CASE.DESCRIPTION}{" "}
+              <a href="#case-study">{content.HOME_PAGE.FEATURED_CASE.LINK}</a>
+            </p>
           </div>
         </div>
       </section>
 
-      <Problems />
+      {/* DLA KOGO SECTION */}
+      <section id="dla-kogo" className={`section ${styles.forWhoSection}`} ref={forWhoRef}>
+        <div className="container">
+          <h2 className="section-title">{content.HOME_PAGE.FOR_WHO.TITLE}</h2>
+          <div className={styles.audienceGrid}>
+            {content.HOME_PAGE.FOR_WHO.CARDS.map((card, index) => (
+              <div
+                key={index}
+                className={`${styles.audienceCard} ${forWhoVisible ? styles.cardVisible : ""}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={styles.audienceIcon}>{card.icon}</div>
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* DLACZEGO MY SECTION */}
+      <section id="dlaczego-my" className={`section section--darker ${styles.whySection}`} ref={whyUsRef}>
+        <div className="container">
+          <h2 className="section-title">{content.HOME_PAGE.WHY_US.TITLE}</h2>
+          <div className={styles.whyGrid}>
+            {content.HOME_PAGE.WHY_US.CARDS.map((card, index) => (
+              <div
+                key={index}
+                className={`${styles.whyCard} ${whyUsVisible ? styles.cardVisible : ""}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={styles.whyIcon}>{card.icon}</div>
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CASE STUDY SECTION */}
+      <section id="case-study" className={`section ${styles.caseStudySection}`} ref={caseStudyRef}>
+        <div className="container">
+          <div className={styles.caseStudyBadge}>{content.HOME_PAGE.CASE_STUDY.BADGE}</div>
+          <h2 className="section-title">{content.HOME_PAGE.CASE_STUDY.TITLE}</h2>
+
+          <div className={`${styles.caseStudyContent} ${caseStudyVisible ? styles.visible : ""}`}>
+            <div className={styles.caseStudyIntro}>
+              <p>{content.HOME_PAGE.CASE_STUDY.INTRO}</p>
+            </div>
+
+            <div className={styles.caseStudyResults}>
+              <h3>{content.HOME_PAGE.CASE_STUDY.WHAT_WE_DID.TITLE}</h3>
+              <ul>
+                {content.HOME_PAGE.CASE_STUDY.WHAT_WE_DID.ITEMS.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+
+              <h3>{content.HOME_PAGE.CASE_STUDY.RESULTS.TITLE}</h3>
+              <div className={styles.resultsGrid}>
+                {content.HOME_PAGE.CASE_STUDY.RESULTS.ITEMS.map((item, index) => (
+                  <div key={index} className={styles.resultItem}>
+                    <span className={styles.resultNumber}>{item.number}</span>
+                    <span className={styles.resultLabel}>{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <div className={styles.caseStudyCta}>
+            <a
+              href="https://calendly.com/michal-sysflow/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.primaryAction}
+            >
+              {content.HOME_PAGE.CASE_STUDY.CTA}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <Testimonials />
+
+      <TrustedBy />
+
+      {/* SOLUTIONS SECTION */}
       <section className="section section--darker" ref={solutionsRef}>
         <div className="container">
           <h2 className="section-title">{content.HOME_PAGE.SOLUTIONS.TITLE}</h2>
@@ -126,9 +218,7 @@ export const HomePage: React.FC = () => {
               </div>
               <div className={styles.cardContent}>
                 <h4>{content.HOME_PAGE.SOLUTIONS.CARDS.TRAINING.TITLE}</h4>
-                <p>
-                  {content.HOME_PAGE.SOLUTIONS.CARDS.TRAINING.DESCRIPTION}
-                </p>
+                <p>{content.HOME_PAGE.SOLUTIONS.CARDS.TRAINING.DESCRIPTION}</p>
                 <span className={styles.link}>
                   {content.HOME_PAGE.SOLUTIONS.CARDS.TRAINING.LINK}
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
@@ -152,9 +242,7 @@ export const HomePage: React.FC = () => {
               </div>
               <div className={styles.cardContent}>
                 <h4>{content.HOME_PAGE.SOLUTIONS.CARDS.FLOWONE.TITLE}</h4>
-                <p>
-                  {content.HOME_PAGE.SOLUTIONS.CARDS.FLOWONE.DESCRIPTION}
-                </p>
+                <p>{content.HOME_PAGE.SOLUTIONS.CARDS.FLOWONE.DESCRIPTION}</p>
                 <span className={styles.link}>
                   {content.HOME_PAGE.SOLUTIONS.CARDS.FLOWONE.LINK}
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
@@ -167,18 +255,66 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      <Testimonials />
+      {/* NEWSLETTER SECTION */}
+      <section id="newsletter" className={`section ${styles.newsletterSection}`}>
+        <div className="container">
+          <div className={styles.newsletterWrapper}>
+            <div className={styles.newsletterContent}>
+              <h2>{content.HOME_PAGE.NEWSLETTER.TITLE}</h2>
+              <p className={styles.newsletterIntro}>{content.HOME_PAGE.NEWSLETTER.INTRO}</p>
+              <ul className={styles.newsletterBenefits}>
+                {content.HOME_PAGE.NEWSLETTER.BENEFITS.map((benefit, index) => (
+                  <li key={index}>{benefit}</li>
+                ))}
+              </ul>
+              <p className={styles.newsletterCommunity}>{content.HOME_PAGE.NEWSLETTER.COMMUNITY}</p>
+            </div>
 
-      <Team />
+            <div className={styles.newsletterFormWrapper}>
+              <form onSubmit={handleNewsletterSubmit} className={styles.newsletterForm}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={content.HOME_PAGE.NEWSLETTER.PLACEHOLDER}
+                  required
+                />
+                <button
+                  type="submit"
+                  className={`${styles.primaryAction} ${submitStatus === "success" ? styles.success : ""} ${submitStatus === "error" ? styles.error : ""}`}
+                  disabled={submitStatus === "loading"}
+                >
+                  {submitStatus === "loading" ? "Zapisuję..." :
+                   submitStatus === "success" ? "✓ Zapisano!" :
+                   submitStatus === "error" ? "Błąd — spróbuj ponownie" :
+                   content.HOME_PAGE.NEWSLETTER.BUTTON}
+                </button>
+              </form>
+              <p className={styles.newsletterDisclaimer}>{content.HOME_PAGE.NEWSLETTER.DISCLAIMER}</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      {/* CONTACT SECTION */}
       <section id="kontakt" className={styles.cta}>
         <div className="container">
-          <h2>{content.HOME_PAGE.CTA.TITLE}</h2>
-          <p>
-            {content.HOME_PAGE.CTA.DESCRIPTION}
-          </p>
+          <div className={styles.contactHeader}>
+            <h2>{content.HOME_PAGE.CONTACT.TITLE}</h2>
+            <p className={styles.contactSubtitle}>{content.HOME_PAGE.CONTACT.SUBTITLE}</p>
+            <ul className={styles.contactBenefits}>
+              {content.HOME_PAGE.CONTACT.BENEFITS.map((benefit, index) => (
+                <li key={index}>{benefit}</li>
+              ))}
+            </ul>
+          </div>
           <div className={styles.ctaButtons}>
-            <a href="https://calendly.com/michal-sysflow/30min" target="_blank" rel="noopener noreferrer" className={styles.primaryAction}>
+            <a
+              href="https://calendly.com/michal-sysflow/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.primaryAction}
+            >
               {content.HOME_PAGE.CTA.BUTTON_PRIMARY}
             </a>
             <a href={content.CONTACT.phoneLink} className={styles.secondaryAction}>
@@ -187,6 +323,18 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* MOBILE STICKY CTA */}
+      <div className={styles.mobileStickyCtaWrapper}>
+        <a
+          href="https://calendly.com/michal-sysflow/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.primaryAction} ${styles.btnFull}`}
+        >
+          Bezpłatna konsultacja →
+        </a>
+      </div>
 
       <Footer />
     </div>

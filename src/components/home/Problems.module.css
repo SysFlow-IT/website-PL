@@ -214,3 +214,29 @@
   }
 }
 
+/* Light mode overrides */
+:global([data-theme='light']) .card {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+:global([data-theme='light']) .card::after {
+  background: #e2e8f0;
+}
+
+:global([data-theme='light']) .cardIndex {
+  color: #64748b;
+}
+
+:global([data-theme='light']) .titleLine {
+  color: #0f172a;
+}
+
+:global([data-theme='light']) .card p {
+  color: #475569;
+}
+
+:global([data-theme='light']) .previewIcon {
+  color: #64748b;
+}
+
